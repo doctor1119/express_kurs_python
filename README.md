@@ -10,10 +10,8 @@
 
 http://127.0.0.1:8000/article
 
-{
-    "count": 200,
-    "pange": "Что-то"
-}
+
+https://www.youtube.com/watch?v=Cy9fAvsXGZA
 
 
 # Документация
