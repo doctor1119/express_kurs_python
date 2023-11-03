@@ -4,20 +4,19 @@ from async_parser import asyncParser
 
 app = FastAPI()
 
-urls_to_scrape = ['https://beautiful-soup-4.readthedocs.io/en/latest/']
+domain = 'https://habr.com'
 
-@app.post("/article")
+
+@app.get("/article")
 async def get_request(request: Request):
     handler = Handler()
     data = await handler.process_request(request)
 
-    if data['success'] == False:
+    if not data['success']:
         raise HTTPException(status_code=400, detail={"error_code": data["error_code"], "message": data["message"]})
 
-    scraper = asyncParser(urls_to_scrape)
-    scrape_results = await scraper.scrape()
+    urls = [f'{domain}/ru/articles/page{i}/' for i in range(1, data['data']['page_count'] + 1)]
+    parser = asyncParser(urls, domain)
+    scrape_results = await parser.scrape()
 
-    return {
-        "data": data,
-        "scrape_results": scrape_results
-    }
+    return await handler.process_responce(scrape_results)

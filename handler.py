@@ -13,4 +13,7 @@ class Handler:
             return {"success": False, "error_code": "e03", "message": "page_count is not a positive number"}
 
         self.data = data
-        return {"success": True, "data": data['page_count']}
+        return {"success": True, "data": data}
+
+    async def process_responce(self, data):
+        return data
